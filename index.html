@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequency 528 — Growth Initiative</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #f0f1f3;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-tertiary: #6b6b6b;
+            --border: #e5e5e5;
+            --accent: #0066cc;
+            --accent-light: #f0f6ff;
+            --success: #2d7d2d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .logo-hero {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .logo-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-meta {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            margin-top: 1.5rem;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Executive Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .summary-card h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .summary-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .summary-card .detail {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            margin-top: 0.5rem;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .phase-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .phase-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+        }
+
+        .phase-card.active {
+            background: var(--accent-light);
+            border-color: var(--accent);
+        }
+
+        .phase-number {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .phase-card p {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Phase Detail */
+        .phase-detail {
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .phase-detail.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .phase-detail h3 {
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+            color: var(--text-primary);
+        }
+
+        .phase-detail .meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+
+        .meta-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .phase-detail ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .phase-detail li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .phase-detail li:before {
+            content: "→ ";
+            color: var(--accent);
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        /* Key Insights */
+        .insight {
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .insight strong {
+            color: var(--accent);
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        tr:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #0052a3;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .roadmap {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility */
+        .text-muted {
+            color: var(--text-tertiary);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo-nav">FREQUENCY 528</div>
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#phases">Phases</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-container">
+            <div class="logo-hero">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' font-size='24' font-weight='bold' text-anchor='middle' dominant-baseline='middle' fill='%230066cc'%3EF528%3C/text%3E%3C/svg%3E" alt="Frequency 528">
+            </div>
+            <h1>Growth Initiative</h1>
+            <p>Strategic plan to systematize Frequency 528's pipeline</p>
+            <p>and scale revenue through inbound lead generation.</p>
+            <div class="hero-meta">
+                <strong>Project Started:</strong> March 2026 | <strong>Timeline:</strong> Festival Season 2026 Forward
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Overview -->
+        <section id="overview">
+            <h2>Executive Overview</h2>
+            
+            <div class="insight">
+                <strong>The Opportunity:</strong> Frequency 528 has proven product, 10+ years of operational credibility, and a market that is growing and underserved. The gap is not a product gap — it's a visibility and systems gap. This plan closes it systematically.
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Current State</h3>
+                    <div class="value">$40K</div>
+                    <div class="detail">Annual Revenue (word of mouth)</div>
+                </div>
+                <div class="summary-card">
+                    <h3>24-Month Target</h3>
+                    <div class="value">$75K+</div>
+                    <div class="detail">Systemized inbound pipeline</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Cost to Execute</h3>
+                    <div class="value">&lt;$30/mo</div>
+                    <div class="detail">Infrastructure + platform fees</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Lead Model</h3>
+                    <div class="value">Multi-Channel</div>
+                    <div class="detail">Search, B2B, referral, paid</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">The Strategic Pivot</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Two core shifts:</p>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 1rem;"><strong style="color: var(--accent);">1. Revenue Model:</strong> From event production to gear rental as primary. More scalable, less labor per event, stronger margins.</li>
+                <li><strong style="color: var(--accent);">2. Lead Generation:</strong> From referral-dependent to systematized inbound. Building the operational layer the product has always deserved.</li>
+            </ul>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Roadmap -->
+        <section id="roadmap">
+            <h2>Strategic Roadmap</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Four-phase marketing and systems buildout, designed to double revenue within 24 months. Festival season is the lever — visibility and infrastructure built now capture demand immediately.</p>
+            
+            <div class="roadmap">
+                <div class="phase-card active" onclick="selectPhase(1)">
+                    <div class="phase-number">Phase 1</div>
+                    <h3>GBP Optimization</h3>
+                    <p>Zero-cost local visibility upgrade</p>
+                </div>
+                <div class="phase-card" onclick="selectPhase(2)">
+                    <div class="phase-number">Phase 2</div>
+                    <h3>Website Rebuild</h3>
+                    <p>Fast, clean, rental-focused presence</p>
+                </div>
+                <div class="phase-card" onclick="selectPhase(2.5)">
+                    <div class="phase-number">Phase 2.5</div>
+                    <h3>Non-Search Vectors</h3>
+                    <p>B2B communities & direct outreach</p>
+                </div>
+                <div class="phase-card" onclick="selectPhase(3)">
+                    <div class="phase-number">Phase 3</div>
+                    <h3>CRM & Pipeline</h3>
+                    <p>HubSpot + Tally + automation</p>
+                </div>
+                <div class="phase-card" onclick="selectPhase(4)">
+                    <div class="phase-number">Phase 4</div>
+                    <h3>Paid Search</h3>
+                    <p>Google Ads at scale ($200–$300/mo)</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Phase Details -->
+        <section id="phases">
+            <h2>Phase Details</h2>
+
+            <!-- Phase 1 -->
+            <div class="phase-detail active" id="phase-1">
+                <h3>Phase 1 — Google Business Profile Optimization</h3>
+                <div class="meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Priority</div>
+                        <div class="meta-value">HIGH — Do first</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Cost</div>
+                        <div class="meta-value">$0</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">3–4 hours</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Owner</div>
+                        <div class="meta-value">Ryan + TJ</div>
+                    </div>
+                </div>
+
+                <div class="insight">
+                    <strong>Why First?</strong> Google serves GBP results above websites for local intent searches. "Silent disco near me" is the dominant search term. This is where he gets found before the website even loads.
+                </div>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Core Actions</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>Fix profile basics (hours, phone, URL, categories)</li>
+                    <li>Write optimized business description (750 chars)</li>
+                    <li>Add service area (7 states: PA, OH, WV, MD, NY, VA, regional)</li>
+                    <li>Upload 20+ event photos (people, headphones, venues)</li>
+                    <li>Seed Q&A section with keyword-rich questions</li>
+                    <li><strong>Review acquisition campaign</strong> — drive 25+ reviews from past clients (biggest impact)</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Success Metrics (30 days)</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>Reviews: 8 → 25+</li>
+                    <li>Star rating: 4.1 → 4.5+</li>
+                    <li>Profile views increase (track in GBP Insights)</li>
+                    <li>Inbound inquiries trending up</li>
+                </ul>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="phase-detail" id="phase-2">
+                <h3>Phase 2 — Website Rebuild Brief & Content Strategy</h3>
+                <div class="meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Priority</div>
+                        <div class="meta-value">HIGH — Before paid ads</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Cost</div>
+                        <div class="meta-value">$0–$20/mo</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">1–2 weekends</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Owner</div>
+                        <div class="meta-value">TJ + Ryan</div>
+                    </div>
+                </div>
+
+                <div class="insight">
+                    <strong>Why Rebuild?</strong> Current WordPress site is slow (Google penalizes), has typos, scattered messaging, no pricing signals, and zero case studies. It creates friction instead of converting.
+                </div>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Platform Recommendation</h3>
+                <p style="color: var(--text-secondary);">Choose one:</p>
+                <ul style="margin-left: 1rem;">
+                    <li><strong>Option A (Recommended):</strong> Clean HTML on Netlify (free hosting, zero monthly cost, fast)</li>
+                    <li><strong>Option B:</strong> Framer ($0–$15/mo, modern design tool, no plugin bloat)</li>
+                    <li><strong>Option C:</strong> Squarespace ($16/mo, fastest to launch, built-in basics)</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Core Pages</h3>
+                <ul style="margin-left: 1rem;">
+                    <li><strong>Home:</strong> Clear headline, one event photo, strong CTA</li>
+                    <li><strong>Silent Disco Rental:</strong> Primary service page, SEO anchor</li>
+                    <li><strong>How It Works:</strong> 3-step explainer, reduce friction</li>
+                    <li><strong>Gallery & Case Studies:</strong> Social proof (real events, real results)</li>
+                    <li><strong>Coverage Area:</strong> Location SEO (Pittsburgh + regional states)</li>
+                    <li><strong>Contact / Book:</strong> Qualified inquiry form</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">SEO Foundation Checklist</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>Page titles include keywords + location</li>
+                    <li>Meta descriptions (150–160 chars)</li>
+                    <li>H1 on every page contains primary keyword</li>
+                    <li>Images have descriptive alt text</li>
+                    <li>Page load speed under 3 seconds</li>
+                    <li>Mobile responsive (test on phone)</li>
+                    <li>Google Search Console connected</li>
+                    <li>Google Analytics connected</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Success Metrics (60 days post-launch)</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>PageSpeed score 85+ on mobile</li>
+                    <li>Organic search impressions in Google Search Console</li>
+                    <li>Inquiry form submissions from organic traffic</li>
+                    <li>Bounce rate under 60%</li>
+                    <li>Avg session duration over 1 minute</li>
+                </ul>
+            </div>
+
+            <!-- Phase 2.5 -->
+            <div class="phase-detail" id="phase-2.5">
+                <h3>Phase 2.5 — Non-Search Lead Vectors</h3>
+                <div class="meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Priority</div>
+                        <div class="meta-value">HIGH (parallel with 1 & 2)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Cost</div>
+                        <div class="meta-value">$0 (time only)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Effort</div>
+                        <div class="meta-value">Ongoing</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Owner</div>
+                        <div class="meta-value">TJ + Ryan</div>
+                    </div>
+                </div>
+
+                <div class="insight">
+                    <strong>Core Insight:</strong> High-value B2B buyers (festival producers, corporate planners) are NOT primarily finding vendors through Google. They source through peer recommendations, production communities, industry directories, and vendor networks.
+                </div>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Six Lead Vectors</h3>
+                
+                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">1. Festival Prospect Database</h4>
+                <p style="color: var(--text-secondary);">Every festival that ran silent disco in 2024–2025 is a pre-qualified prospect. Research and build a list of 50+ festivals in drive radius. Feed into CRM.</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">2. Event Planner Communities</h4>
+                <p style="color: var(--text-secondary);">Join Facebook groups, LinkedIn, Reddit. Don't spam — contribute genuinely. When someone asks for silent disco vendors, be there.</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">3. Industry Directories</h4>
+                <p style="color: var(--text-secondary);">List on GigSalad, The Bash, Thumbtack, WeddingWire. Free or low-cost. High event planner traffic.</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">4. Festival Vendor Applications</h4>
+                <p style="color: var(--text-secondary);">Most mid-size festivals (5K–50K attendance) have vendor/entertainment submission processes. Direct B2B sales channel most operators ignore.</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">5. Venue Relationships</h4>
+                <p style="color: var(--text-secondary);">Target rooftops, amphitheaters, corporate venues, wedding spaces, breweries. One venue coordinator = multiple referrals/year.</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">6. Network Reactivation</h4>
+                <p style="color: var(--text-secondary);">Audit past clients and contacts from last 5 years. Send personal reactivation message (not a blast). Ask for referrals explicitly.</p>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">30-Day Priorities</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>Start festival prospect list (50+ in drive radius)</li>
+                    <li>Set up GigSalad + The Bash listings</li>
+                    <li>Join 3–5 relevant Facebook groups</li>
+                    <li>Ryan updates LinkedIn (rental focus)</li>
+                    <li>ID top 10 venue targets in Pittsburgh metro</li>
+                    <li>Send reactivation outreach to 20 warmest past contacts</li>
+                </ul>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="phase-detail" id="phase-3">
+                <h3>Phase 3 — CRM, Forms & Lead Pipeline Setup</h3>
+                <div class="meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Priority</div>
+                        <div class="meta-value">HIGH</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Cost</div>
+                        <div class="meta-value">$6/mo (Gmail)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">1 weekend setup</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Owner</div>
+                        <div class="meta-value">TJ (build) + Ryan (operate)</div>
+                    </div>
+                </div>
+
+                <div class="insight">
+                    <strong>The Problem:</strong> Every lead lands in email and either gets handled or gets buried. No pipeline visibility. Leads are disappearing.
+                </div>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">The Stack</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Purpose</th>
+                            <th>Cost</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Tally.so</strong></td>
+                            <td>Inquiry form on website</td>
+                            <td>Free</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HubSpot Free</strong></td>
+                            <td>CRM, pipeline, contact tracking</td>
+                            <td>Free</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gmail / Google Workspace</strong></td>
+                            <td>Email communication</td>
+                            <td>$6/mo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zapier (free tier)</strong></td>
+                            <td>Tally → HubSpot automation</td>
+                            <td>Free</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Pipeline Stages</h3>
+                <ul style="margin-left: 1rem;">
+                    <li><strong>New Inquiry:</strong> Form submitted, not yet reviewed</li>
+                    <li><strong>Qualified:</strong> Date, location, headcount confirmed viable</li>
+                    <li><strong>Quote Sent:</strong> Pricing sent to prospect</li>
+                    <li><strong>Follow Up:</strong> Quote sent, awaiting response</li>
+                    <li><strong>Booked:</strong> Deposit received, date confirmed</li>
+                    <li><strong>Completed:</strong> Event done, review request sent</li>
+                    <li><strong>Lost:</strong> No response after 3 follow-ups</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Inquiry Form Fields</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>Name / Organization</li>
+                    <li>Email, Phone</li>
+                    <li>Event Date</li>
+                    <li>Event Location (City, State)</li>
+                    <li>Event Type (dropdown: Festival, Corporate, Wedding, Birthday, Other)</li>
+                    <li>Expected Guest Count</li>
+                    <li>How did you hear about us? (dropdown: Google, Maps, Instagram, Facebook, Referral, GigSalad, Other)</li>
+                    <li>Additional Notes</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Automation: Tally → HubSpot</h3>
+                <p style="color: var(--text-secondary);">Every form submission automatically creates a contact + deal in HubSpot. Ryan gets notified. Zero manual entry.</p>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Follow-Up Sequences</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;"><strong>Quote Sent → No Response:</strong></p>
+                <ul style="margin-left: 1rem; margin-bottom: 1.5rem;">
+                    <li>Day 3: Check-in</li>
+                    <li>Day 7: Gentle reminder</li>
+                    <li>Day 14: Final follow-up</li>
+                    <li>Day 21: Move to Lost</li>
+                </ul>
+
+                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;"><strong>Completed → Review Request:</strong></p>
+                <ul style="margin-left: 1rem;">
+                    <li>Day 1 post-event: Thank you + Google review link</li>
+                    <li>Day 7: One follow-up if no review yet</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Success Metrics (60 days post-setup)</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>Zero leads lost to inbox burial</li>
+                    <li>Every inquiry has a HubSpot deal within 24 hours</li>
+                    <li>Quote response time under 48 hours</li>
+                    <li>Follow-up sequences running on every open deal</li>
+                    <li>Monthly pipeline review happening</li>
+                </ul>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="phase-detail" id="phase-4">
+                <h3>Phase 4 — Programmatic & Paid Search Strategy</h3>
+                <div class="meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Priority</div>
+                        <div class="meta-value">MEDIUM (last)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Cost</div>
+                        <div class="meta-value">$200–$500/mo</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value">1 week setup</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Owner</div>
+                        <div class="meta-value">TJ</div>
+                    </div>
+                </div>
+
+                <div class="insight">
+                    <strong>Guiding Principle:</strong> Paid search amplifies a working funnel. It doesn't fix a broken one. Don't spend a dollar until Phases 1, 2, and 3 are live.
+                </div>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Market Reality Check</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">From Google Trends research:</p>
+                <ul style="margin-left: 1rem;">
+                    <li><strong>"Silent disco rental"</strong> — anchor term, consistent demand, low competition ✓</li>
+                    <li><strong>"Silent disco near me"</strong> — consumer intent (event-goer), not Ryan's buyer ✗</li>
+                    <li><strong>"Festival silent disco"</strong> — meaningful seasonal spikes (April–Aug) ✓</li>
+                    <li><strong>"Headphone party rental"</strong> — dead term, skip it ✗</li>
+                </ul>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">This is a favorable paid search environment. Low competition + niche category = low cost-per-click and strong ROI potential.</p>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Campaign Structure (Google Search)</h3>
+                <ul style="margin-left: 1rem;">
+                    <li><strong>Campaign 1 — Core Rental (Always On):</strong> "silent disco rental", "silent disco Pittsburgh", "silent disco Pennsylvania", regional variants</li>
+                    <li><strong>Campaign 2 — Festival Season (April–Aug):</strong> "festival silent disco", "silent disco festival rental", "festival entertainment rental"</li>
+                    <li><strong>Campaign 3 — Corporate Events (Always On):</strong> "corporate silent disco", "team building silent disco", "corporate entertainment rental"</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Budget Recommendations</h3>
+                <ul style="margin-left: 1rem;">
+                    <li><strong>Starting:</strong> $200–$300/mo (enough to get real data)</li>
+                    <li><strong>Scaling:</strong> $400–$600/mo (once conversion data shows CPL under $30)</li>
+                    <li><strong>Seasonal:</strong> Increase April–August (festival season)</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Budget Allocation</h3>
+                <ul style="margin-left: 1rem;">
+                    <li><strong>Core Rental:</strong> 50% (highest intent, always on)</li>
+                    <li><strong>Festival Season:</strong> 30% (April–August only)</li>
+                    <li><strong>Corporate & Events:</strong> 20% (build over time)</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Tracking Setup (Non-Negotiable)</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>Google Analytics 4 installed</li>
+                    <li>Google Ads conversion tracking</li>
+                    <li>Form submission tracked as conversion event</li>
+                    <li>Phone call tracking enabled</li>
+                    <li>UTM parameters on all ad URLs</li>
+                    <li>HubSpot lead source field capturing "Google Ads"</li>
+                </ul>
+
+                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Success Metrics (90 days post-launch)</h3>
+                <ul style="margin-left: 1rem;">
+                    <li>Cost per lead under $30</li>
+                    <li>Click-through rate above 5% on core keywords</li>
+                    <li>Conversion rate (click to inquiry) above 8%</li>
+                    <li>At least 2–3 booked events from paid search</li>
+                    <li>Quality Score 7+ on primary keywords</li>
+                    <li>ROAS positive by month 3</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Key Market Intelligence -->
+        <section>
+            <h2>Key Market Intelligence</h2>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Finding</th>
+                        <th>Implication</th>
+                    </tr>
+                    <tr>
+                        <td><strong>"Silent disco rental"</strong> = anchor term, consistent 5-year search demand</td>
+                        <td>Core keyword for search + ads. Good organic volume + low competition.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>"Silent disco near me"</strong> = consumer event-goer intent, NOT B2B buyer</td>
+                        <td>Don't bid on this in ads. This is people looking to attend events, not planners.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>"Silent disco rental near me"</strong> = near-zero search volume</td>
+                        <td>B2B buyers don't append "near me" — Google knows their location already.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>High-value B2B buyers</strong> source through communities, not Google search</td>
+                        <td>Non-search channels (Phase 2.5) are equally critical as search infrastructure.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PA, OH, WV, MD, NY</strong> = underserved in search data</td>
+                        <td>Ryan's natural drive radius has weak competitor presence. Geographic advantage.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Festival season</strong> (April–August) has meaningful search spikes</td>
+                        <td>Ramp up visibility and ad spend before April. Planning window is now.</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Financial Summary -->
+        <section>
+            <h2>Financial Snapshot</h2>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Current</th>
+                        <th>24-Month Target</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Revenue</strong></td>
+                        <td>~$40,000</td>
+                        <td>$75,000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Revenue Model</strong></td>
+                        <td>Event production + rental</td>
+                        <td>Gear rental primary</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lead Source</strong></td>
+                        <td>Word of mouth</td>
+                        <td>Multi-channel inbound</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pipeline Visibility</strong></td>
+                        <td>None</td>
+                        <td>HubSpot CRM</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monthly Marketing Cost</strong></td>
+                        <td>~$0</td>
+                        <td>~$250–$550 (Phase 4 onward)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Website</strong></td>
+                        <td>Dated, low-converting</td>
+                        <td>Rebuilt, SEO-optimized</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Reviews</strong></td>
+                        <td>8 (4.1 stars)</td>
+                        <td>25+ (4.5+ stars)</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- CTA Section -->
+        <section id="download">
+            <div class="cta-section">
+                <h3>Full Document Download</h3>
+                <p>Download the complete strategic brief as a PDF for offline review, printing, or sharing.</p>
+                <a href="#" class="btn" onclick="generatePDF(); return false;">Download Full Brief (PDF)</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Frequency 528 Growth Initiative</strong></p>
+        <p>Collaborative project: TJ + Claude | Started March 2026</p>
+        <p style="margin-top: 1rem; font-size: 0.85rem;">Pittsburgh, PA | <a href="tel:+18143101528" style="color: var(--accent); text-decoration: none;">814-310-1528</a></p>
+    </footer>
+
+    <script>
+        function selectPhase(phase) {
+            // Hide all phase details
+            const allPhases = document.querySelectorAll('.phase-detail');
+            allPhases.forEach(el => el.classList.remove('active'));
+
+            // Remove active class from all cards
+            const allCards = document.querySelectorAll('.phase-card');
+            allCards.forEach(el => el.classList.remove('active'));
+
+            // Show selected phase
+            const phaseId = `phase-${phase}`;
+            const phaseEl = document.getElementById(phaseId);
+            if (phaseEl) {
+                phaseEl.classList.add('active');
+            }
+
+            // Mark card as active
+            event.target.closest('.phase-card').classList.add('active');
+
+            // Scroll to phase details
+            setTimeout(() => {
+                phaseEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function generatePDF() {
+            alert('PDF download feature coming soon. For now, use your browser\'s Print to PDF feature (Cmd+P / Ctrl+P → Save as PDF).');
+        }
+    </script>
+</body>
+</html>

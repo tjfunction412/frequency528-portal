@@ -1,0 +1,14 @@
+> NOTE: The Vercel CLI now collects telemetry regarding usage of the CLI.
+> This information is used to shape the CLI roadmap and prioritize features.
+> You can learn more, including how to opt-out if you'd not like to participate in this program, by visiting the following URL:
+> https://vercel.com/docs/cli/about-telemetry
+WARN! `--confirm` is deprecated, please use `--yes` instead
+Loading scopes…
+Error: The specified token is not valid. Use `vercel login` to generate a new token.
+Error: Failed to get package info: Error: getaddrinfo EAI_AGAIN registry.npmjs.org
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
+  errno: -3001,
+  code: 'EAI_AGAIN',
+  syscall: 'getaddrinfo',
+  hostname: 'registry.npmjs.org'
+}
