@@ -5,633 +5,984 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frequency 528 — Growth Initiative</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
 
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --bg-tertiary: #f0f1f3;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --text-tertiary: #6b6b6b;
-            --border: #e5e5e5;
             --accent: #0066cc;
-            --accent-light: #f0f6ff;
-            --success: #2d7d2d;
+            --accent-light: #e8f2ff;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7f8fa;
+            --text-primary: #1a1a2e;
+            --text-secondary: #555;
+            --text-muted: #888;
+            --border: #e2e5ea;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --green: #16a34a;
+            --green-light: #f0fdf4;
+            --green-border: #bbf7d0;
+            --amber: #d97706;
+            --amber-light: #fffbeb;
+            --amber-border: #fde68a;
+            --red: #dc2626;
+            --red-light: #fef2f2;
+            --red-border: #fecaca;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
+            font-family: 'DM Sans', -apple-system, sans-serif;
             color: var(--text-primary);
-            background: var(--bg-primary);
+            background: var(--bg-secondary);
+            line-height: 1.6;
         }
 
-        /* Navigation */
-        nav {
-            position: sticky;
-            top: 0;
+        /* ========================================
+           PASSWORD GATE
+           ======================================== */
+        #password-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #password-gate.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .gate-container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 380px;
+            width: 100%;
+        }
+        .gate-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            opacity: 0.9;
+        }
+        .gate-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 2rem;
+        }
+        .gate-input-wrap {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .gate-input {
+            width: 100%;
+            padding: 14px 18px;
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+            text-align: center;
+        }
+        .gate-input::placeholder {
+            color: rgba(255,255,255,0.25);
+            letter-spacing: 0.15em;
+        }
+        .gate-input:focus {
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.1);
+        }
+        .gate-error {
+            color: #f87171;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .gate-error.show { opacity: 1; }
+        .gate-hint {
+            color: rgba(255,255,255,0.2);
+            font-size: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        /* ========================================
+           MAIN PORTAL (hidden until auth)
+           ======================================== */
+        #portal-content {
+            display: none;
+        }
+        #portal-content.visible {
+            display: block;
+        }
+
+        /* ========================================
+           CTA ACTION DASHBOARD
+           ======================================== */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--text-primary) 0%, #2a2a4a 100%);
+            color: #fff;
+            padding: 0;
+        }
+        .cta-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem 2.5rem;
+        }
+        .cta-badge {
+            display: inline-block;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 1.25rem;
+        }
+        .cta-heading {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        .cta-sub {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        /* Drive link button */
+        .drive-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: transform 0.15s, box-shadow 0.15s;
+            margin-bottom: 2.5rem;
+        }
+        .drive-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .drive-btn svg { flex-shrink: 0; }
+
+        /* Checklist */
+        .checklist-section {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+        }
+        .checklist-header {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 1.25rem;
+        }
+        .checklist-group-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .checklist-group-title:first-of-type {
+            margin-top: 0;
+        }
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 8px 0;
+            cursor: pointer;
+            user-select: none;
+        }
+        .check-item input[type="checkbox"] {
+            display: none;
+        }
+        .check-box {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 2px solid rgba(255,255,255,0.25);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            transition: all 0.15s;
+        }
+        .check-item:hover .check-box {
+            border-color: rgba(255,255,255,0.5);
+        }
+        .check-item input:checked + .check-box {
+            background: var(--green);
+            border-color: var(--green);
+        }
+        .check-box svg {
+            width: 12px;
+            height: 12px;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+        .check-item input:checked + .check-box svg {
+            opacity: 1;
+        }
+        .check-item input:checked ~ .check-text {
+            opacity: 0.4;
+            text-decoration: line-through;
+        }
+        .check-text {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.5;
+            transition: opacity 0.15s;
+        }
+        .check-text strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        .check-note {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.35);
+            margin-top: 2px;
+        }
+        .checklist-progress {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .progress-bar-bg {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--green);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        .progress-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.05em;
+        }
+
+        /* Divider between CTA and portal */
+        .cta-divider {
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #4f9cf7, var(--accent));
+        }
+
+        /* ========================================
+           EXISTING PORTAL STYLES
+           ======================================== */
+        .nav {
             background: var(--bg-primary);
             border-bottom: 1px solid var(--border);
-            z-index: 100;
             padding: 1rem 2rem;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
+            position: sticky;
+            top: 0;
+            z-index: 100;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
-
-        .logo-nav {
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
+        .nav-brand {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             color: var(--text-primary);
         }
-
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
         }
-
         .nav-links a {
             text-decoration: none;
             color: var(--text-secondary);
             font-size: 0.9rem;
+            font-weight: 500;
             transition: color 0.2s;
         }
+        .nav-links a:hover { color: var(--accent); }
 
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        /* Hero */
         .hero {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-            padding: 4rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem 3rem;
             text-align: center;
         }
-
-        .hero-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .logo-hero {
+        .hero img {
             width: 120px;
             height: 120px;
-            margin: 0 auto 2rem;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
         }
-
-        .logo-hero img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .hero h1 {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
             font-weight: 700;
-            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 540px;
+            margin: 0 auto 0.5rem;
+        }
+        .hero .meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
         }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
-
-        .hero-meta {
-            font-size: 0.9rem;
-            color: var(--text-tertiary);
-            margin-top: 1.5rem;
+        .section-sub {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
         }
 
-        /* Main container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
+        .opportunity-box {
+            background: var(--accent-light);
+            border: 1px solid #cce0ff;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
+        .opportunity-box strong { color: var(--accent); }
 
-        /* Section styling */
-        section {
-            margin-bottom: 4rem;
-        }
-
-        section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            font-weight: 700;
-        }
-
-        /* Executive Summary */
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .summary-card {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .summary-card h3 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-tertiary);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .summary-card .value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .summary-card .detail {
-            font-size: 0.9rem;
-            color: var(--text-tertiary);
-            margin-top: 0.5rem;
-        }
-
-        /* Roadmap */
-        .roadmap {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .phase-card {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .phase-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
-        }
-
-        .phase-card.active {
-            background: var(--accent-light);
-            border-color: var(--accent);
-        }
-
-        .phase-number {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-tertiary);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .phase-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .phase-card p {
-            font-size: 0.9rem;
-            color: var(--text-tertiary);
-        }
-
-        /* Phase Detail */
-        .phase-detail {
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-
-        .phase-detail.active {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .phase-detail h3 {
-            font-size: 1.4rem;
-            margin: 2rem 0 1rem 0;
-            color: var(--text-primary);
-        }
-
-        .phase-detail .meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
         }
-
-        .meta-item {
-            display: flex;
-            flex-direction: column;
+        .summary-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            text-align: center;
         }
-
-        .meta-label {
+        .summary-card h3 {
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-tertiary);
-            margin-bottom: 0.3rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .summary-card .value {
+            font-size: 1.5rem;
             font-weight: 700;
+            color: var(--accent);
+        }
+        .summary-card .detail {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
         }
 
-        .meta-value {
-            font-size: 1rem;
-            color: var(--text-primary);
-            font-weight: 600;
+        .pivot-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
-
-        .phase-detail ul {
+        .pivot-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        .pivot-box ul {
             list-style: none;
             padding: 0;
         }
+        .pivot-box li {
+            padding: 0.75rem 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .pivot-box li:first-child { border-top: none; }
+        .pivot-box li strong { color: var(--text-primary); }
 
-        .phase-detail li {
-            padding: 0.5rem 0;
+        /* Roadmap */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .roadmap-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .roadmap-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+        .roadmap-card .phase-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .roadmap-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .roadmap-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Phase details */
+        .phase-detail {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .phase-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.15s;
+        }
+        .phase-header:hover { background: var(--bg-secondary); }
+        .phase-header h3 { font-size: 1.15rem; }
+        .phase-toggle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        .phase-detail.open .phase-toggle { transform: rotate(45deg); }
+
+        .phase-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .phase-meta-item {
+            font-size: 0.8rem;
+        }
+        .phase-meta-item .label {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            display: block;
+        }
+        .phase-meta-item .val {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .phase-body {
+            padding: 0 1.5rem 1.5rem;
+            display: none;
+        }
+        .phase-detail.open .phase-body { display: block; }
+
+        .phase-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        .phase-body h4 {
+            font-size: 0.95rem;
+            margin: 1.25rem 0 0.75rem;
+            color: var(--text-primary);
+        }
+        .phase-body ul {
+            padding-left: 1.25rem;
             color: var(--text-secondary);
         }
-
-        .phase-detail li:before {
-            content: "→ ";
-            color: var(--accent);
-            font-weight: 700;
-            margin-right: 0.5rem;
+        .phase-body li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
         }
+        .phase-body li strong { color: var(--text-primary); }
 
-        /* Key Insights */
-        .insight {
-            background: var(--accent-light);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
-        }
-
-        .insight strong {
-            color: var(--accent);
+        .phase-body h5 {
+            font-size: 0.85rem;
+            margin: 1rem 0 0.5rem;
+            color: var(--text-secondary);
         }
 
         /* Tables */
-        .table-container {
-            overflow-x: auto;
-            margin: 2rem 0;
-        }
-
-        table {
+        .info-table {
             width: 100%;
             border-collapse: collapse;
+            margin: 1rem 0;
             font-size: 0.9rem;
         }
-
-        th {
-            background: var(--bg-secondary);
-            padding: 1rem;
+        .info-table th {
             text-align: left;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
             font-weight: 600;
             border-bottom: 2px solid var(--border);
-            color: var(--text-primary);
         }
-
-        td {
-            padding: 1rem;
+        .info-table td {
+            padding: 0.75rem;
             border-bottom: 1px solid var(--border);
             color: var(--text-secondary);
         }
+        .info-table td strong { color: var(--text-primary); }
 
-        tr:hover {
-            background: var(--bg-secondary);
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2rem;
+        /* Download */
+        .download-section {
             text-align: center;
-            margin-top: 3rem;
+            padding: 3rem 2rem;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
         }
-
-        .cta-section h3 {
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .cta-section p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .btn {
+        .download-btn {
             display: inline-block;
             background: var(--accent);
-            color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 6px;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: background 0.2s, transform 0.15s;
         }
-
-        .btn:hover {
+        .download-btn:hover {
             background: #0052a3;
-            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
-        }
-
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--border);
+            transform: translateY(-1px);
         }
 
         /* Footer */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            padding: 2rem;
+        .footer {
             text-align: center;
-            color: var(--text-tertiary);
-            font-size: 0.9rem;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-primary);
         }
+        .footer a { color: var(--accent); text-decoration: none; }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .roadmap {
-                grid-template-columns: 1fr;
-            }
-
-            .summary-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Utility */
-        .text-muted {
-            color: var(--text-tertiary);
-        }
-
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 2rem 0;
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 1.75rem; }
+            .summary-grid { grid-template-columns: 1fr 1fr; }
+            .roadmap-grid { grid-template-columns: 1fr 1fr; }
+            .nav-links { display: none; }
+            .cta-heading { font-size: 1.35rem; }
+            .phase-meta { gap: 1rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo-nav">FREQUENCY 528</div>
-            <ul class="nav-links">
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#roadmap">Roadmap</a></li>
-                <li><a href="#phases">Phases</a></li>
-                <li><a href="#download">Download</a></li>
-            </ul>
+
+<!-- ============================================
+     PASSWORD GATE
+     ============================================ -->
+<div id="password-gate">
+    <div class="gate-container">
+        <img src="./logo.png" alt="Frequency 528" class="gate-logo">
+        <div class="gate-title">Frequency 528 — Client Portal</div>
+        <div class="gate-input-wrap">
+            <input
+                type="password"
+                id="gate-password"
+                class="gate-input"
+                placeholder="Enter access code"
+                autocomplete="off"
+                autofocus
+            >
+            <div class="gate-error" id="gate-error">Incorrect code. Try again.</div>
         </div>
+        <div class="gate-hint">Contact TJ for access</div>
+    </div>
+</div>
+
+<!-- ============================================
+     MAIN PORTAL
+     ============================================ -->
+<div id="portal-content">
+
+    <!-- CTA ACTION DASHBOARD -->
+    <div class="cta-banner">
+        <div class="cta-inner">
+            <div class="cta-badge">Action Required</div>
+            <h2 class="cta-heading">Phase 1 Prep: What Ryan Needs to Gather</h2>
+            <p class="cta-sub">Before we can start the GBP optimization, we need these items from you. Getting everything into the shared folder up front means zero delays.</p>
+
+            <a href="https://drive.google.com/drive/folders/1faN5dV1VJjxzENMCdh-vE_dQ9HVQ6y_v?usp=drive_link" target="_blank" rel="noopener" class="drive-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                Open Media Dump Folder (Google Drive)
+            </a>
+
+            <div class="checklist-section">
+                <div class="checklist-header">GBP Readiness Checklist</div>
+
+                <div class="checklist-group-title">🔑 Account Access</div>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Google account email</strong> that owns the GBP listing
+                        <span class="check-note">The Gmail or Workspace address tied to the business profile</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Confirm you can log in</strong> to Google Business Profile Manager
+                        <span class="check-note">Go to business.google.com — can you see your listing? If locked out, flag it now.</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Grant TJ access</strong> as a manager on the GBP listing
+                        <span class="check-note">Or share login credentials securely — either works. TJ needs edit access.</span>
+                    </span>
+                </label>
+
+                <div class="checklist-group-title">📋 Business Info to Confirm</div>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Business phone number</strong> — the number that should ring
+                        <span class="check-note">This goes on GBP. Confirm it's the number you want leads calling.</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Business hours</strong> or "By appointment only"
+                        <span class="check-note">GBP needs hours. If you don't have set hours, "by appointment" is fine.</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Website URL</strong> to link from the GBP profile
+                        <span class="check-note">Current site URL. We'll update this again after the website rebuild.</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Confirm service area</strong> — PA, OH, WV, MD, NY, VA + any others?
+                        <span class="check-note">List every state you're willing to travel to for a gig.</span>
+                    </span>
+                </label>
+
+                <div class="checklist-group-title">📸 Photos & Media</div>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Upload 20+ event photos</strong> to the shared Drive folder
+                        <span class="check-note">Crowd shots, people wearing headphones, venue setups, gear close-ups. The more the better.</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Photo details</strong> — for each batch, note the event name, location, and date
+                        <span class="check-note">Doesn't need to be formal. A text file or note in the Drive folder is fine.</span>
+                    </span>
+                </label>
+
+                <div class="checklist-group-title">⭐ Review Campaign Prep</div>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>List of 10–15 past clients</strong> willing to leave a Google review
+                        <span class="check-note">Names + email or phone. These are people who had a great experience and would vouch for you.</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Your Google review link</strong> — the direct URL people can click to leave a review
+                        <span class="check-note">Search "Google review link generator" or find it in GBP dashboard → Share review form.</span>
+                    </span>
+                </label>
+
+                <div class="checklist-group-title">🚩 Potential Blockers — Flag These Now</div>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Any duplicate GBP listings?</strong> Sometimes Google creates phantom listings.
+                        <span class="check-note">Search "Frequency 528" on Google Maps. If you see more than one listing, let TJ know.</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Verification status</strong> — is the listing verified (blue checkmark)?
+                        <span class="check-note">Unverified = limited features. If it's not verified, we need to do that first (can take days by mail).</span>
+                    </span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" data-check>
+                    <span class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>
+                    <span class="check-text">
+                        <strong>Any previous suspension or policy issues?</strong>
+                        <span class="check-note">If GBP ever flagged or suspended the listing, that changes our approach.</span>
+                    </span>
+                </label>
+
+                <!-- Progress bar -->
+                <div class="checklist-progress">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">0 of 15 items complete</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cta-divider"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav">
+        <div class="nav-brand">Frequency 528</div>
+        <ul class="nav-links">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#phases">Phases</a></li>
+            <li><a href="#download">Download</a></li>
+        </ul>
     </nav>
 
-    <!-- Hero -->
-    <div class="hero">
-        <div class="hero-container">
-            <div class="logo-hero">
-                <img src="./logo.png" alt="Frequency 528">
+    <!-- HERO -->
+    <div class="hero" id="overview">
+        <img src="./logo.png" alt="Frequency 528 logo">
+        <h1>Growth Initiative</h1>
+        <p>Strategic plan to systematize Frequency 528's pipeline and scale revenue through inbound lead generation.</p>
+        <div class="meta"><strong>Project Started:</strong> March 2026 &nbsp;|&nbsp; <strong>Timeline:</strong> Festival Season 2026 Forward</div>
+    </div>
+
+    <!-- EXECUTIVE OVERVIEW -->
+    <div class="section">
+        <h2 class="section-title">Executive Overview</h2>
+        <div class="opportunity-box">
+            <strong>The Opportunity:</strong> Frequency 528 has proven product, 10+ years of operational credibility, and a market that is growing and underserved. The gap is not a product gap — it's a visibility and systems gap. This plan closes it systematically.
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h3>Current State</h3>
+                <div class="value">$40K</div>
+                <div class="detail">Annual Revenue (word of mouth)</div>
             </div>
-            <h1>Growth Initiative</h1>
-            <p>Strategic plan to systematize Frequency 528's pipeline</p>
-            <p>and scale revenue through inbound lead generation.</p>
-            <div class="hero-meta">
-                <strong>Project Started:</strong> March 2026 | <strong>Timeline:</strong> Festival Season 2026 Forward
+            <div class="summary-card">
+                <h3>24-Month Target</h3>
+                <div class="value">$75K+</div>
+                <div class="detail">Systemized inbound pipeline</div>
+            </div>
+            <div class="summary-card">
+                <h3>Cost to Execute</h3>
+                <div class="value">&lt;$30/mo</div>
+                <div class="detail">Infrastructure + platform fees</div>
+            </div>
+            <div class="summary-card">
+                <h3>Lead Model</h3>
+                <div class="value">Multi-Channel</div>
+                <div class="detail">Search, B2B, referral, paid</div>
+            </div>
+        </div>
+
+        <div class="pivot-box">
+            <h3>The Strategic Pivot</h3>
+            <p style="color:var(--text-secondary); margin-bottom:0.75rem;">Two core shifts:</p>
+            <ul>
+                <li><strong>1. Revenue Model:</strong> From event production to gear rental as primary. More scalable, less labor per event, stronger margins.</li>
+                <li><strong>2. Lead Generation:</strong> From referral-dependent to systematized inbound. Building the operational layer the product has always deserved.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="section" id="roadmap">
+        <h2 class="section-title">Strategic Roadmap</h2>
+        <p class="section-sub">Four-phase marketing and systems buildout, designed to double revenue within 24 months. Festival season is the lever — visibility and infrastructure built now capture demand immediately.</p>
+        <div class="roadmap-grid">
+            <div class="roadmap-card" onclick="openPhase('phase1')">
+                <div class="phase-label">Phase 1</div>
+                <h3>GBP Optimization</h3>
+                <p>Zero-cost local visibility upgrade</p>
+            </div>
+            <div class="roadmap-card" onclick="openPhase('phase2')">
+                <div class="phase-label">Phase 2</div>
+                <h3>Website Rebuild</h3>
+                <p>Fast, clean, rental-focused presence</p>
+            </div>
+            <div class="roadmap-card" onclick="openPhase('phase25')">
+                <div class="phase-label">Phase 2.5</div>
+                <h3>Non-Search Vectors</h3>
+                <p>B2B communities &amp; direct outreach</p>
+            </div>
+            <div class="roadmap-card" onclick="openPhase('phase3')">
+                <div class="phase-label">Phase 3</div>
+                <h3>CRM &amp; Pipeline</h3>
+                <p>HubSpot + Tally + automation</p>
+            </div>
+            <div class="roadmap-card" onclick="openPhase('phase4')">
+                <div class="phase-label">Phase 4</div>
+                <h3>Paid Search</h3>
+                <p>Google Ads at scale ($200–$300/mo)</p>
             </div>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Overview -->
-        <section id="overview">
-            <h2>Executive Overview</h2>
-            
-            <div class="insight">
-                <strong>The Opportunity:</strong> Frequency 528 has proven product, 10+ years of operational credibility, and a market that is growing and underserved. The gap is not a product gap — it's a visibility and systems gap. This plan closes it systematically.
-            </div>
+    <!-- PHASE DETAILS -->
+    <div class="section" id="phases">
+        <h2 class="section-title">Phase Details</h2>
 
-            <div class="summary-grid">
-                <div class="summary-card">
-                    <h3>Current State</h3>
-                    <div class="value">$40K</div>
-                    <div class="detail">Annual Revenue (word of mouth)</div>
-                </div>
-                <div class="summary-card">
-                    <h3>24-Month Target</h3>
-                    <div class="value">$75K+</div>
-                    <div class="detail">Systemized inbound pipeline</div>
-                </div>
-                <div class="summary-card">
-                    <h3>Cost to Execute</h3>
-                    <div class="value">&lt;$30/mo</div>
-                    <div class="detail">Infrastructure + platform fees</div>
-                </div>
-                <div class="summary-card">
-                    <h3>Lead Model</h3>
-                    <div class="value">Multi-Channel</div>
-                    <div class="detail">Search, B2B, referral, paid</div>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">The Strategic Pivot</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Two core shifts:</p>
-            <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: 1rem;"><strong style="color: var(--accent);">1. Revenue Model:</strong> From event production to gear rental as primary. More scalable, less labor per event, stronger margins.</li>
-                <li><strong style="color: var(--accent);">2. Lead Generation:</strong> From referral-dependent to systematized inbound. Building the operational layer the product has always deserved.</li>
-            </ul>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Roadmap -->
-        <section id="roadmap">
-            <h2>Strategic Roadmap</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Four-phase marketing and systems buildout, designed to double revenue within 24 months. Festival season is the lever — visibility and infrastructure built now capture demand immediately.</p>
-            
-            <div class="roadmap">
-                <div class="phase-card active" onclick="selectPhase(1)">
-                    <div class="phase-number">Phase 1</div>
-                    <h3>GBP Optimization</h3>
-                    <p>Zero-cost local visibility upgrade</p>
-                </div>
-                <div class="phase-card" onclick="selectPhase(2)">
-                    <div class="phase-number">Phase 2</div>
-                    <h3>Website Rebuild</h3>
-                    <p>Fast, clean, rental-focused presence</p>
-                </div>
-                <div class="phase-card" onclick="selectPhase(2.5)">
-                    <div class="phase-number">Phase 2.5</div>
-                    <h3>Non-Search Vectors</h3>
-                    <p>B2B communities & direct outreach</p>
-                </div>
-                <div class="phase-card" onclick="selectPhase(3)">
-                    <div class="phase-number">Phase 3</div>
-                    <h3>CRM & Pipeline</h3>
-                    <p>HubSpot + Tally + automation</p>
-                </div>
-                <div class="phase-card" onclick="selectPhase(4)">
-                    <div class="phase-number">Phase 4</div>
-                    <h3>Paid Search</h3>
-                    <p>Google Ads at scale ($200–$300/mo)</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Phase Details -->
-        <section id="phases">
-            <h2>Phase Details</h2>
-
-            <!-- Phase 1 -->
-            <div class="phase-detail active" id="phase-1">
+        <!-- Phase 1 -->
+        <div class="phase-detail" id="phase1">
+            <div class="phase-header" onclick="togglePhase(this)">
                 <h3>Phase 1 — Google Business Profile Optimization</h3>
-                <div class="meta">
-                    <div class="meta-item">
-                        <div class="meta-label">Priority</div>
-                        <div class="meta-value">HIGH — Do first</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Cost</div>
-                        <div class="meta-value">$0</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Time</div>
-                        <div class="meta-value">3–4 hours</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Owner</div>
-                        <div class="meta-value">Ryan + TJ</div>
-                    </div>
-                </div>
-
-                <div class="insight">
-                    <strong>Why First?</strong> Google serves GBP results above websites for local intent searches. "Silent disco near me" is the dominant search term. This is where he gets found before the website even loads.
-                </div>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Core Actions</h3>
-                <ul style="margin-left: 1rem;">
+                <span class="phase-toggle">+</span>
+            </div>
+            <div class="phase-meta">
+                <div class="phase-meta-item"><span class="label">Priority</span><span class="val">HIGH — Do first</span></div>
+                <div class="phase-meta-item"><span class="label">Cost</span><span class="val">$0</span></div>
+                <div class="phase-meta-item"><span class="label">Time</span><span class="val">3–4 hours</span></div>
+                <div class="phase-meta-item"><span class="label">Owner</span><span class="val">Ryan + TJ</span></div>
+            </div>
+            <div class="phase-body">
+                <p><strong>Why First?</strong> Google serves GBP results above websites for local intent searches. "Silent disco near me" is the dominant search term. This is where Frequency 528 gets found before the website even loads.</p>
+                <h4>Core Actions</h4>
+                <ul>
                     <li>Fix profile basics (hours, phone, URL, categories)</li>
                     <li>Write optimized business description (750 chars)</li>
                     <li>Add service area (7 states: PA, OH, WV, MD, NY, VA, regional)</li>
                     <li>Upload 20+ event photos (people, headphones, venues)</li>
-                    <li>Seed Q&A section with keyword-rich questions</li>
+                    <li>Seed Q&amp;A section with keyword-rich questions</li>
                     <li><strong>Review acquisition campaign</strong> — drive 25+ reviews from past clients (biggest impact)</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Success Metrics (30 days)</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Success Metrics (30 days)</h4>
+                <ul>
                     <li>Reviews: 8 → 25+</li>
                     <li>Star rating: 4.1 → 4.5+</li>
                     <li>Profile views increase (track in GBP Insights)</li>
                     <li>Inbound inquiries trending up</li>
                 </ul>
             </div>
+        </div>
 
-            <!-- Phase 2 -->
-            <div class="phase-detail" id="phase-2">
-                <h3>Phase 2 — Website Rebuild Brief & Content Strategy</h3>
-                <div class="meta">
-                    <div class="meta-item">
-                        <div class="meta-label">Priority</div>
-                        <div class="meta-value">HIGH — Before paid ads</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Cost</div>
-                        <div class="meta-value">$0–$20/mo</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Time</div>
-                        <div class="meta-value">1–2 weekends</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Owner</div>
-                        <div class="meta-value">TJ + Ryan</div>
-                    </div>
-                </div>
-
-                <div class="insight">
-                    <strong>Why Rebuild?</strong> Current WordPress site is slow (Google penalizes), has typos, scattered messaging, no pricing signals, and zero case studies. It creates friction instead of converting.
-                </div>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Platform Recommendation</h3>
-                <p style="color: var(--text-secondary);">Choose one:</p>
-                <ul style="margin-left: 1rem;">
+        <!-- Phase 2 -->
+        <div class="phase-detail" id="phase2">
+            <div class="phase-header" onclick="togglePhase(this)">
+                <h3>Phase 2 — Website Rebuild Brief &amp; Content Strategy</h3>
+                <span class="phase-toggle">+</span>
+            </div>
+            <div class="phase-meta">
+                <div class="phase-meta-item"><span class="label">Priority</span><span class="val">HIGH — Before paid ads</span></div>
+                <div class="phase-meta-item"><span class="label">Cost</span><span class="val">$0–$20/mo</span></div>
+                <div class="phase-meta-item"><span class="label">Time</span><span class="val">1–2 weekends</span></div>
+                <div class="phase-meta-item"><span class="label">Owner</span><span class="val">TJ + Ryan</span></div>
+            </div>
+            <div class="phase-body">
+                <p><strong>Why Rebuild?</strong> Current WordPress site is slow (Google penalizes), has typos, scattered messaging, no pricing signals, and zero case studies. It creates friction instead of converting.</p>
+                <h4>Platform Recommendation</h4>
+                <ul>
                     <li><strong>Option A (Recommended):</strong> Clean HTML on Netlify (free hosting, zero monthly cost, fast)</li>
                     <li><strong>Option B:</strong> Framer ($0–$15/mo, modern design tool, no plugin bloat)</li>
                     <li><strong>Option C:</strong> Squarespace ($16/mo, fastest to launch, built-in basics)</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Core Pages</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Core Pages</h4>
+                <ul>
                     <li><strong>Home:</strong> Clear headline, one event photo, strong CTA</li>
                     <li><strong>Silent Disco Rental:</strong> Primary service page, SEO anchor</li>
                     <li><strong>How It Works:</strong> 3-step explainer, reduce friction</li>
-                    <li><strong>Gallery & Case Studies:</strong> Social proof (real events, real results)</li>
+                    <li><strong>Gallery &amp; Case Studies:</strong> Social proof (real events, real results)</li>
                     <li><strong>Coverage Area:</strong> Location SEO (Pittsburgh + regional states)</li>
                     <li><strong>Contact / Book:</strong> Qualified inquiry form</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">SEO Foundation Checklist</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>SEO Foundation Checklist</h4>
+                <ul>
                     <li>Page titles include keywords + location</li>
                     <li>Meta descriptions (150–160 chars)</li>
                     <li>H1 on every page contains primary keyword</li>
@@ -641,9 +992,8 @@
                     <li>Google Search Console connected</li>
                     <li>Google Analytics connected</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Success Metrics (60 days post-launch)</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Success Metrics (60 days post-launch)</h4>
+                <ul>
                     <li>PageSpeed score 85+ on mobile</li>
                     <li>Organic search impressions in Google Search Console</li>
                     <li>Inquiry form submissions from organic traffic</li>
@@ -651,55 +1001,37 @@
                     <li>Avg session duration over 1 minute</li>
                 </ul>
             </div>
+        </div>
 
-            <!-- Phase 2.5 -->
-            <div class="phase-detail" id="phase-2.5">
+        <!-- Phase 2.5 -->
+        <div class="phase-detail" id="phase25">
+            <div class="phase-header" onclick="togglePhase(this)">
                 <h3>Phase 2.5 — Non-Search Lead Vectors</h3>
-                <div class="meta">
-                    <div class="meta-item">
-                        <div class="meta-label">Priority</div>
-                        <div class="meta-value">HIGH (parallel with 1 & 2)</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Cost</div>
-                        <div class="meta-value">$0 (time only)</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Effort</div>
-                        <div class="meta-value">Ongoing</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Owner</div>
-                        <div class="meta-value">TJ + Ryan</div>
-                    </div>
-                </div>
-
-                <div class="insight">
-                    <strong>Core Insight:</strong> High-value B2B buyers (festival producers, corporate planners) are NOT primarily finding vendors through Google. They source through peer recommendations, production communities, industry directories, and vendor networks.
-                </div>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Six Lead Vectors</h3>
-                
-                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">1. Festival Prospect Database</h4>
-                <p style="color: var(--text-secondary);">Every festival that ran silent disco in 2024–2025 is a pre-qualified prospect. Research and build a list of 50+ festivals in drive radius. Feed into CRM.</p>
-
-                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">2. Event Planner Communities</h4>
-                <p style="color: var(--text-secondary);">Join Facebook groups, LinkedIn, Reddit. Don't spam — contribute genuinely. When someone asks for silent disco vendors, be there.</p>
-
-                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">3. Industry Directories</h4>
-                <p style="color: var(--text-secondary);">List on GigSalad, The Bash, Thumbtack, WeddingWire. Free or low-cost. High event planner traffic.</p>
-
-                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">4. Festival Vendor Applications</h4>
-                <p style="color: var(--text-secondary);">Most mid-size festivals (5K–50K attendance) have vendor/entertainment submission processes. Direct B2B sales channel most operators ignore.</p>
-
-                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">5. Venue Relationships</h4>
-                <p style="color: var(--text-secondary);">Target rooftops, amphitheaters, corporate venues, wedding spaces, breweries. One venue coordinator = multiple referrals/year.</p>
-
-                <h4 style="margin-top: 1.5rem; color: var(--text-primary);">6. Network Reactivation</h4>
-                <p style="color: var(--text-secondary);">Audit past clients and contacts from last 5 years. Send personal reactivation message (not a blast). Ask for referrals explicitly.</p>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">30-Day Priorities</h3>
-                <ul style="margin-left: 1rem;">
+                <span class="phase-toggle">+</span>
+            </div>
+            <div class="phase-meta">
+                <div class="phase-meta-item"><span class="label">Priority</span><span class="val">HIGH (parallel with 1 &amp; 2)</span></div>
+                <div class="phase-meta-item"><span class="label">Cost</span><span class="val">$0 (time only)</span></div>
+                <div class="phase-meta-item"><span class="label">Effort</span><span class="val">Ongoing</span></div>
+                <div class="phase-meta-item"><span class="label">Owner</span><span class="val">TJ + Ryan</span></div>
+            </div>
+            <div class="phase-body">
+                <p><strong>Core Insight:</strong> High-value B2B buyers (festival producers, corporate planners) are NOT primarily finding vendors through Google. They source through peer recommendations, production communities, industry directories, and vendor networks.</p>
+                <h4>Six Lead Vectors</h4>
+                <h5>1. Festival Prospect Database</h5>
+                <p>Every festival that ran silent disco in 2024–2025 is a pre-qualified prospect. Research and build a list of 50+ festivals in drive radius. Feed into CRM.</p>
+                <h5>2. Event Planner Communities</h5>
+                <p>Join Facebook groups, LinkedIn, Reddit. Don't spam — contribute genuinely. When someone asks for silent disco vendors, be there.</p>
+                <h5>3. Industry Directories</h5>
+                <p>List on GigSalad, The Bash, Thumbtack, WeddingWire. Free or low-cost. High event planner traffic.</p>
+                <h5>4. Festival Vendor Applications</h5>
+                <p>Most mid-size festivals (5K–50K attendance) have vendor/entertainment submission processes. Direct B2B sales channel most operators ignore.</p>
+                <h5>5. Venue Relationships</h5>
+                <p>Target rooftops, amphitheaters, corporate venues, wedding spaces, breweries. One venue coordinator = multiple referrals/year.</p>
+                <h5>6. Network Reactivation</h5>
+                <p>Audit past clients and contacts from last 5 years. Send personal reactivation message (not a blast). Ask for referrals explicitly.</p>
+                <h4>30-Day Priorities</h4>
+                <ul>
                     <li>Start festival prospect list (50+ in drive radius)</li>
                     <li>Set up GigSalad + The Bash listings</li>
                     <li>Join 3–5 relevant Facebook groups</li>
@@ -708,66 +1040,34 @@
                     <li>Send reactivation outreach to 20 warmest past contacts</li>
                 </ul>
             </div>
+        </div>
 
-            <!-- Phase 3 -->
-            <div class="phase-detail" id="phase-3">
-                <h3>Phase 3 — CRM, Forms & Lead Pipeline Setup</h3>
-                <div class="meta">
-                    <div class="meta-item">
-                        <div class="meta-label">Priority</div>
-                        <div class="meta-value">HIGH</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Cost</div>
-                        <div class="meta-value">$6/mo (Gmail)</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Time</div>
-                        <div class="meta-value">1 weekend setup</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Owner</div>
-                        <div class="meta-value">TJ (build) + Ryan (operate)</div>
-                    </div>
-                </div>
-
-                <div class="insight">
-                    <strong>The Problem:</strong> Every lead lands in email and either gets handled or gets buried. No pipeline visibility. Leads are disappearing.
-                </div>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">The Stack</h3>
-                <div class="table-container">
-                    <table>
-                        <tr>
-                            <th>Tool</th>
-                            <th>Purpose</th>
-                            <th>Cost</th>
-                        </tr>
-                        <tr>
-                            <td><strong>Tally.so</strong></td>
-                            <td>Inquiry form on website</td>
-                            <td>Free</td>
-                        </tr>
-                        <tr>
-                            <td><strong>HubSpot Free</strong></td>
-                            <td>CRM, pipeline, contact tracking</td>
-                            <td>Free</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Gmail / Google Workspace</strong></td>
-                            <td>Email communication</td>
-                            <td>$6/mo</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Zapier (free tier)</strong></td>
-                            <td>Tally → HubSpot automation</td>
-                            <td>Free</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Pipeline Stages</h3>
-                <ul style="margin-left: 1rem;">
+        <!-- Phase 3 -->
+        <div class="phase-detail" id="phase3">
+            <div class="phase-header" onclick="togglePhase(this)">
+                <h3>Phase 3 — CRM, Forms &amp; Lead Pipeline Setup</h3>
+                <span class="phase-toggle">+</span>
+            </div>
+            <div class="phase-meta">
+                <div class="phase-meta-item"><span class="label">Priority</span><span class="val">HIGH</span></div>
+                <div class="phase-meta-item"><span class="label">Cost</span><span class="val">$6/mo (Gmail)</span></div>
+                <div class="phase-meta-item"><span class="label">Time</span><span class="val">1 weekend setup</span></div>
+                <div class="phase-meta-item"><span class="label">Owner</span><span class="val">TJ (build) + Ryan (operate)</span></div>
+            </div>
+            <div class="phase-body">
+                <p><strong>The Problem:</strong> Every lead lands in email and either gets handled or gets buried. No pipeline visibility. Leads are disappearing.</p>
+                <h4>The Stack</h4>
+                <table class="info-table">
+                    <thead><tr><th>Tool</th><th>Purpose</th><th>Cost</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Tally.so</strong></td><td>Inquiry form on website</td><td>Free</td></tr>
+                        <tr><td><strong>HubSpot Free</strong></td><td>CRM, pipeline, contact tracking</td><td>Free</td></tr>
+                        <tr><td><strong>Gmail / Google Workspace</strong></td><td>Email communication</td><td>$6/mo</td></tr>
+                        <tr><td><strong>Zapier (free tier)</strong></td><td>Tally → HubSpot automation</td><td>Free</td></tr>
+                    </tbody>
+                </table>
+                <h4>Pipeline Stages</h4>
+                <ul>
                     <li><strong>New Inquiry:</strong> Form submitted, not yet reviewed</li>
                     <li><strong>Qualified:</strong> Date, location, headcount confirmed viable</li>
                     <li><strong>Quote Sent:</strong> Pricing sent to prospect</li>
@@ -776,9 +1076,8 @@
                     <li><strong>Completed:</strong> Event done, review request sent</li>
                     <li><strong>Lost:</strong> No response after 3 follow-ups</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Inquiry Form Fields</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Inquiry Form Fields</h4>
+                <ul>
                     <li>Name / Organization</li>
                     <li>Email, Phone</li>
                     <li>Event Date</li>
@@ -788,27 +1087,23 @@
                     <li>How did you hear about us? (dropdown: Google, Maps, Instagram, Facebook, Referral, GigSalad, Other)</li>
                     <li>Additional Notes</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Automation: Tally → HubSpot</h3>
-                <p style="color: var(--text-secondary);">Every form submission automatically creates a contact + deal in HubSpot. Ryan gets notified. Zero manual entry.</p>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Follow-Up Sequences</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;"><strong>Quote Sent → No Response:</strong></p>
-                <ul style="margin-left: 1rem; margin-bottom: 1.5rem;">
+                <h4>Automation: Tally → HubSpot</h4>
+                <p>Every form submission automatically creates a contact + deal in HubSpot. Ryan gets notified. Zero manual entry.</p>
+                <h4>Follow-Up Sequences</h4>
+                <p><strong>Quote Sent → No Response:</strong></p>
+                <ul>
                     <li>Day 3: Check-in</li>
                     <li>Day 7: Gentle reminder</li>
                     <li>Day 14: Final follow-up</li>
                     <li>Day 21: Move to Lost</li>
                 </ul>
-
-                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;"><strong>Completed → Review Request:</strong></p>
-                <ul style="margin-left: 1rem;">
+                <p><strong>Completed → Review Request:</strong></p>
+                <ul>
                     <li>Day 1 post-event: Thank you + Google review link</li>
                     <li>Day 7: One follow-up if no review yet</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Success Metrics (60 days post-setup)</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Success Metrics (60 days post-setup)</h4>
+                <ul>
                     <li>Zero leads lost to inbox burial</li>
                     <li>Every inquiry has a HubSpot deal within 24 hours</li>
                     <li>Quote response time under 48 hours</li>
@@ -816,66 +1111,50 @@
                     <li>Monthly pipeline review happening</li>
                 </ul>
             </div>
+        </div>
 
-            <!-- Phase 4 -->
-            <div class="phase-detail" id="phase-4">
-                <h3>Phase 4 — Programmatic & Paid Search Strategy</h3>
-                <div class="meta">
-                    <div class="meta-item">
-                        <div class="meta-label">Priority</div>
-                        <div class="meta-value">MEDIUM (last)</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Cost</div>
-                        <div class="meta-value">$200–$500/mo</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Time</div>
-                        <div class="meta-value">1 week setup</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-label">Owner</div>
-                        <div class="meta-value">TJ</div>
-                    </div>
-                </div>
-
-                <div class="insight">
-                    <strong>Guiding Principle:</strong> Paid search amplifies a working funnel. It doesn't fix a broken one. Don't spend a dollar until Phases 1, 2, and 3 are live.
-                </div>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Market Reality Check</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;">From Google Trends research:</p>
-                <ul style="margin-left: 1rem;">
+        <!-- Phase 4 -->
+        <div class="phase-detail" id="phase4">
+            <div class="phase-header" onclick="togglePhase(this)">
+                <h3>Phase 4 — Programmatic &amp; Paid Search Strategy</h3>
+                <span class="phase-toggle">+</span>
+            </div>
+            <div class="phase-meta">
+                <div class="phase-meta-item"><span class="label">Priority</span><span class="val">MEDIUM (last)</span></div>
+                <div class="phase-meta-item"><span class="label">Cost</span><span class="val">$200–$500/mo</span></div>
+                <div class="phase-meta-item"><span class="label">Time</span><span class="val">1 week setup</span></div>
+                <div class="phase-meta-item"><span class="label">Owner</span><span class="val">TJ</span></div>
+            </div>
+            <div class="phase-body">
+                <p><strong>Guiding Principle:</strong> Paid search amplifies a working funnel. It doesn't fix a broken one. Don't spend a dollar until Phases 1, 2, and 3 are live.</p>
+                <h4>Market Reality Check</h4>
+                <ul>
                     <li><strong>"Silent disco rental"</strong> — anchor term, consistent demand, low competition ✓</li>
                     <li><strong>"Silent disco near me"</strong> — consumer intent (event-goer), not Ryan's buyer ✗</li>
                     <li><strong>"Festival silent disco"</strong> — meaningful seasonal spikes (April–Aug) ✓</li>
                     <li><strong>"Headphone party rental"</strong> — dead term, skip it ✗</li>
                 </ul>
-                <p style="color: var(--text-secondary); margin-top: 1rem;">This is a favorable paid search environment. Low competition + niche category = low cost-per-click and strong ROI potential.</p>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Campaign Structure (Google Search)</h3>
-                <ul style="margin-left: 1rem;">
+                <p>This is a favorable paid search environment. Low competition + niche category = low cost-per-click and strong ROI potential.</p>
+                <h4>Campaign Structure (Google Search)</h4>
+                <ul>
                     <li><strong>Campaign 1 — Core Rental (Always On):</strong> "silent disco rental", "silent disco Pittsburgh", "silent disco Pennsylvania", regional variants</li>
                     <li><strong>Campaign 2 — Festival Season (April–Aug):</strong> "festival silent disco", "silent disco festival rental", "festival entertainment rental"</li>
                     <li><strong>Campaign 3 — Corporate Events (Always On):</strong> "corporate silent disco", "team building silent disco", "corporate entertainment rental"</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Budget Recommendations</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Budget Recommendations</h4>
+                <ul>
                     <li><strong>Starting:</strong> $200–$300/mo (enough to get real data)</li>
                     <li><strong>Scaling:</strong> $400–$600/mo (once conversion data shows CPL under $30)</li>
                     <li><strong>Seasonal:</strong> Increase April–August (festival season)</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Budget Allocation</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Budget Allocation</h4>
+                <ul>
                     <li><strong>Core Rental:</strong> 50% (highest intent, always on)</li>
                     <li><strong>Festival Season:</strong> 30% (April–August only)</li>
-                    <li><strong>Corporate & Events:</strong> 20% (build over time)</li>
+                    <li><strong>Corporate &amp; Events:</strong> 20% (build over time)</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Tracking Setup (Non-Negotiable)</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Tracking Setup (Non-Negotiable)</h4>
+                <ul>
                     <li>Google Analytics 4 installed</li>
                     <li>Google Ads conversion tracking</li>
                     <li>Form submission tracked as conversion event</li>
@@ -883,9 +1162,8 @@
                     <li>UTM parameters on all ad URLs</li>
                     <li>HubSpot lead source field capturing "Google Ads"</li>
                 </ul>
-
-                <h3 style="font-size: 1.2rem; margin-top: 1.5rem;">Success Metrics (90 days post-launch)</h3>
-                <ul style="margin-left: 1rem;">
+                <h4>Success Metrics (90 days post-launch)</h4>
+                <ul>
                     <li>Cost per lead under $30</li>
                     <li>Click-through rate above 5% on core keywords</li>
                     <li>Conversion rate (click to inquiry) above 8%</li>
@@ -894,143 +1172,146 @@
                     <li>ROAS positive by month 3</li>
                 </ul>
             </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Key Market Intelligence -->
-        <section>
-            <h2>Key Market Intelligence</h2>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>Finding</th>
-                        <th>Implication</th>
-                    </tr>
-                    <tr>
-                        <td><strong>"Silent disco rental"</strong> = anchor term, consistent 5-year search demand</td>
-                        <td>Core keyword for search + ads. Good organic volume + low competition.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>"Silent disco near me"</strong> = consumer event-goer intent, NOT B2B buyer</td>
-                        <td>Don't bid on this in ads. This is people looking to attend events, not planners.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>"Silent disco rental near me"</strong> = near-zero search volume</td>
-                        <td>B2B buyers don't append "near me" — Google knows their location already.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>High-value B2B buyers</strong> source through communities, not Google search</td>
-                        <td>Non-search channels (Phase 2.5) are equally critical as search infrastructure.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>PA, OH, WV, MD, NY</strong> = underserved in search data</td>
-                        <td>Ryan's natural drive radius has weak competitor presence. Geographic advantage.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Festival season</strong> (April–August) has meaningful search spikes</td>
-                        <td>Ramp up visibility and ad spend before April. Planning window is now.</td>
-                    </tr>
-                </table>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Financial Summary -->
-        <section>
-            <h2>Financial Snapshot</h2>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Current</th>
-                        <th>24-Month Target</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Annual Revenue</strong></td>
-                        <td>~$40,000</td>
-                        <td>$75,000+</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Revenue Model</strong></td>
-                        <td>Event production + rental</td>
-                        <td>Gear rental primary</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Lead Source</strong></td>
-                        <td>Word of mouth</td>
-                        <td>Multi-channel inbound</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Pipeline Visibility</strong></td>
-                        <td>None</td>
-                        <td>HubSpot CRM</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Monthly Marketing Cost</strong></td>
-                        <td>~$0</td>
-                        <td>~$250–$550 (Phase 4 onward)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Website</strong></td>
-                        <td>Dated, low-converting</td>
-                        <td>Rebuilt, SEO-optimized</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Google Reviews</strong></td>
-                        <td>8 (4.1 stars)</td>
-                        <td>25+ (4.5+ stars)</td>
-                    </tr>
-                </table>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- CTA Section -->
-        <section id="download">
-            <div class="cta-section">
-                <h3>Full Document Download</h3>
-                <p>Download the complete strategic brief as a PDF for offline review, printing, or sharing.</p>
-                <a href="./Frequency_528_Growth_Initiative.pdf" download class="btn">Download Full Brief (PDF)</a>
-            </div>
-        </section>
+        </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
+    <!-- MARKET INTELLIGENCE -->
+    <div class="section">
+        <h2 class="section-title">Key Market Intelligence</h2>
+        <table class="info-table">
+            <thead><tr><th>Finding</th><th>Implication</th></tr></thead>
+            <tbody>
+                <tr><td><strong>"Silent disco rental"</strong> = anchor term, consistent 5-year search demand</td><td>Core keyword for search + ads. Good organic volume + low competition.</td></tr>
+                <tr><td><strong>"Silent disco near me"</strong> = consumer event-goer intent, NOT B2B buyer</td><td>Don't bid on this in ads. People looking to attend events, not planners.</td></tr>
+                <tr><td><strong>"Silent disco rental near me"</strong> = near-zero search volume</td><td>B2B buyers don't append "near me" — Google knows their location already.</td></tr>
+                <tr><td><strong>High-value B2B buyers</strong> source through communities, not Google search</td><td>Non-search channels (Phase 2.5) are equally critical as search infrastructure.</td></tr>
+                <tr><td><strong>PA, OH, WV, MD, NY</strong> = underserved in search data</td><td>Ryan's natural drive radius has weak competitor presence. Geographic advantage.</td></tr>
+                <tr><td><strong>Festival season</strong> (April–August) has meaningful search spikes</td><td>Ramp up visibility and ad spend before April. Planning window is now.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FINANCIAL SNAPSHOT -->
+    <div class="section">
+        <h2 class="section-title">Financial Snapshot</h2>
+        <table class="info-table">
+            <thead><tr><th>Metric</th><th>Current</th><th>24-Month Target</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Annual Revenue</strong></td><td>~$40,000</td><td>$75,000+</td></tr>
+                <tr><td><strong>Revenue Model</strong></td><td>Event production + rental</td><td>Gear rental primary</td></tr>
+                <tr><td><strong>Lead Source</strong></td><td>Word of mouth</td><td>Multi-channel inbound</td></tr>
+                <tr><td><strong>Pipeline Visibility</strong></td><td>None</td><td>HubSpot CRM</td></tr>
+                <tr><td><strong>Monthly Marketing Cost</strong></td><td>~$0</td><td>~$250–$550 (Phase 4 onward)</td></tr>
+                <tr><td><strong>Website</strong></td><td>Dated, low-converting</td><td>Rebuilt, SEO-optimized</td></tr>
+                <tr><td><strong>Google Reviews</strong></td><td>8 (4.1 stars)</td><td>25+ (4.5+ stars)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DOWNLOAD -->
+    <div class="download-section" id="download">
+        <h2 class="section-title">Full Document Download</h2>
+        <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Download the complete strategic brief as a PDF for offline review, printing, or sharing.</p>
+        <a href="./Frequency_528_Growth_Initiative.pdf" class="download-btn" download>Download Full Brief (PDF)</a>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
         <p><strong>Frequency 528 Growth Initiative</strong></p>
         <p>Collaborative project: TJ + Claude | Started March 2026</p>
-        <p style="margin-top: 1rem; font-size: 0.85rem;">Pittsburgh, PA | <a href="tel:+18143101528" style="color: var(--accent); text-decoration: none;">814-310-1528</a></p>
-    </footer>
+        <p>Pittsburgh, PA | <a href="tel:+18143101528">814-310-1528</a></p>
+    </div>
+</div>
 
-    <script>
-        function selectPhase(phase) {
-            // Hide all phase details
-            const allPhases = document.querySelectorAll('.phase-detail');
-            allPhases.forEach(el => el.classList.remove('active'));
+<script>
+    // ========================================
+    // PASSWORD GATE
+    // ========================================
+    const PASS = 'silentdisco';
+    const gate = document.getElementById('password-gate');
+    const portal = document.getElementById('portal-content');
+    const passInput = document.getElementById('gate-password');
+    const gateError = document.getElementById('gate-error');
 
-            // Remove active class from all cards
-            const allCards = document.querySelectorAll('.phase-card');
-            allCards.forEach(el => el.classList.remove('active'));
+    // Check if already authenticated this session
+    if (sessionStorage.getItem('f528_auth') === 'true') {
+        gate.classList.add('hidden');
+        portal.classList.add('visible');
+    }
 
-            // Show selected phase
-            const phaseId = `phase-${phase}`;
-            const phaseEl = document.getElementById(phaseId);
-            if (phaseEl) {
-                phaseEl.classList.add('active');
+    passInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            if (passInput.value === PASS) {
+                sessionStorage.setItem('f528_auth', 'true');
+                gate.classList.add('hidden');
+                portal.classList.add('visible');
+            } else {
+                gateError.classList.add('show');
+                passInput.value = '';
+                passInput.focus();
+                setTimeout(() => gateError.classList.remove('show'), 2000);
             }
-
-            // Mark card as active
-            event.target.closest('.phase-card').classList.add('active');
-
-            // Scroll to phase details
-            setTimeout(() => {
-                phaseEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
         }
-    </script>
+    });
+
+    // ========================================
+    // CHECKLIST PERSISTENCE & PROGRESS
+    // ========================================
+    const checkboxes = document.querySelectorAll('[data-check]');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const STORAGE_KEY = 'f528_checklist';
+
+    function loadChecklist() {
+        try {
+            const saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}');
+            checkboxes.forEach((cb, i) => {
+                if (saved[i]) cb.checked = true;
+            });
+        } catch(e) {}
+        updateProgress();
+    }
+
+    function saveChecklist() {
+        const state = {};
+        checkboxes.forEach((cb, i) => {
+            if (cb.checked) state[i] = true;
+        });
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function updateProgress() {
+        const total = checkboxes.length;
+        const checked = [...checkboxes].filter(cb => cb.checked).length;
+        const pct = Math.round((checked / total) * 100);
+        progressFill.style.width = pct + '%';
+        progressText.textContent = checked + ' of ' + total + ' items complete';
+    }
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+            saveChecklist();
+            updateProgress();
+        });
+    });
+
+    loadChecklist();
+
+    // ========================================
+    // PHASE ACCORDION
+    // ========================================
+    function togglePhase(header) {
+        const detail = header.parentElement;
+        detail.classList.toggle('open');
+    }
+
+    function openPhase(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.add('open');
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+</script>
 </body>
 </html>
-<!-- Force rebuild -->
